@@ -1,11 +1,10 @@
 const {Router} = require ('express') ;
+const { getTemperaments } = require('../controlers/temperamento');
 const router = Router();
 
 
 
-router.get('/', (req, res, next)=>{
-    res.send('buenas buenas 2')
-})
+router.get('/', getTemperaments)
 
 
 module.exports = router;
