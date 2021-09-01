@@ -21,17 +21,26 @@ function getDogs(req, res, next){
     Promise.all([dogsApi,dogsDb])
     .then((response)=>{
         let [dogsApiResponse, dogsDbResponse] = response;
-        res.send(dogsDbResponse.concat(dogsApiResponse.data.map(raza => {
-            let info = {
-               id: raza.id,
-               nombre: raza.name,
-               peso: raza.weight.metric,
-               imagen: raza.image.url,
-               temperamento: raza.teperament 
+        let Api = dogsApiResponse.data.map(razaApi => {
+            let infoApi = {
+               id: razaApi.id,
+               nombre: razaApi.name,
+               peso: razaApi.weight,
+               imagen: razaApi.image.url,
+               temperamento: razaApi.temperament
             }
-
-            return info
-        }) ))
+            return infoApi
+        });
+        let db = dogsDbResponse.map(raza =>{
+            let infoDb = {
+                id: raza.id,
+                nombre: raza.name,
+                peso: raza.peso
+             }
+             return infoDb
+        })
+        var ApiDb = (db.concat(Api))
+        res.send(ApiDb)
     })
     .catch((error)=>next(error))
 }
