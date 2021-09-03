@@ -24,5 +24,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    raza:{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   });
 };

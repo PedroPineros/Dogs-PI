@@ -25,7 +25,8 @@ const getDogs = async function (req, res, next) {
             nombre: razaApi.name,
             peso: razaApi.weight,
             imagen: razaApi.image.url,
-            temperamento: razaApi.temperament
+            temperamento: razaApi.temperament,
+            raza: razaApi.breed_group
         }
         return infoApi
     });
@@ -34,7 +35,8 @@ const getDogs = async function (req, res, next) {
             id: raza.id,
             nombre: raza.name,
             temperamento: raza.Temperamentos,
-            peso: raza.peso
+            peso: raza.peso,
+            raza: raza.raza
         }
         return infoDb
     })
@@ -92,6 +94,7 @@ function getBuscarId(req, res, next) {
             let detalles = {
                 imagen: raza.image.url,
                 nombre: raza.name,
+                raza: e.breed_group,
                 temperamento: raza.temperament,
                 altura: raza.height,
                 peso: raza.weight,
@@ -105,12 +108,13 @@ function getBuscarId(req, res, next) {
 
 
 function postFormularioDogs(req, res, next) {
-    const { name, altura, peso, anos_de_vida } = req.body;
+    const { name, altura, peso, anos_de_vida, raza } = req.body;
     let values = {
         name: name,
         altura: altura,
         peso: peso,
-        anos_de_vida: anos_de_vida
+        anos_de_vida: anos_de_vida,
+        raza: raza
     }
     return Dog.create({ ...values, id: uuidv4() })
         .then(response => res.send(response))
