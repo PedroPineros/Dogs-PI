@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../img/dog.png'
 import './Home.css'
+import { getDogs } from '../action/actions'
+import { connect } from 'react-redux'
 
-function Home() {
+function Home({getDogs}) {
+
+    useEffect(() => {
+        getDogs();
+    }, []);
 
     return (
         <div className="contenedorImg">
@@ -12,5 +18,10 @@ function Home() {
     )
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getDogs: () => dispatch(getDogs())
+    }
+}
 
-export default Home
+export default connect(null, mapDispatchToProps)(Home)

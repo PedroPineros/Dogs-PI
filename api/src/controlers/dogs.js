@@ -16,6 +16,7 @@ function getView(req, res, next) {
 }
 
 const getDogs = async function (req, res, next) {
+    try{
     let dogsApiResponse = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
     let dogsDbResponse = await Dog.findAll({ include: Temperamento }).then(response => { return response })
     let Api = dogsApiResponse.data.map(razaApi => {
@@ -43,7 +44,9 @@ const getDogs = async function (req, res, next) {
     } else {
         res.status(404)
     }
-
+    }catch(err){
+        console.log(err)
+    }
 }
 
 function getBuscarDogs(req, res, next) {
@@ -95,7 +98,7 @@ function getBuscarId(req, res, next) {
                 anos_de_vida: raza.life_span
             }
             res.send(detalles)
-        })
+        }).catch((error) => next(error))
     }
 }
 
@@ -111,6 +114,7 @@ function postFormularioDogs(req, res, next) {
     }
     return Dog.create({ ...values, id: uuidv4() })
         .then(response => res.send(response))
+        .catch((error) => next(error))
 }
 
 const postDogs_Temperamentos = async function(req, res){
