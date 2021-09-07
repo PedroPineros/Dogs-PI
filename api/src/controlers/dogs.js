@@ -16,37 +16,48 @@ function getView(req, res, next) {
 }
 
 const getDogs = async function (req, res, next) {
-    try{
-    let dogsApiResponse = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
-    let dogsDbResponse = await Dog.findAll({ include: Temperamento }).then(response => { return response })
-    let Api = dogsApiResponse.data.map(razaApi => {
-        let infoApi = {
-            id: razaApi.id,
-            nombre: razaApi.name,
-            peso: razaApi.weight,
-            imagen: razaApi.image.url,
-            temperamento: razaApi.temperament,
-            raza: razaApi.breed_group
+    try {
+        let dogsApiResponse = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
+        let dogsDbResponse = await Dog.findAll({ include: Temperamento }).then(response => { return response })
+        let Api = dogsApiResponse.data.map(razaApi => {
+            var MinString = razaApi.weight.metric.slice(0, -4)
+            var MinInt = parseInt(MinString)
+            var MinString = razaApi.weight.metric.slice(4)
+            var MaxInt = parseInt(MinString)
+            let infoApi = {
+                id: razaApi.id,
+                nombre: razaApi.name,
+                peso: {
+                    min: MinInt,
+                    max: MaxInt,
+                },
+                imagen: razaApi.image.url,
+                temperamento: razaApi.temperament,
+                raza: razaApi.breed_group
+            }
+            return infoApi
+        });
+        let db = dogsDbResponse.map(raza => {
+            let infoDb = {
+                id: raza.id,
+                nombre: raza.name,
+                temperamento: raza.Temperamentos.map(e=> e.name).join(","),
+        
+                peso: {
+                    min: raza.peso.min,
+                    max: raza.peso.max,
+                },
+                raza: raza.raza
+            }
+            return infoDb
+        })
+        var ApiDb = (db.concat(Api))
+        if (ApiDb) {
+            res.send(ApiDb)
+        } else {
+            res.status(404)
         }
-        return infoApi
-    });
-    let db = dogsDbResponse.map(raza => {
-        let infoDb = {
-            id: raza.id,
-            nombre: raza.name,
-            temperamento: raza.Temperamentos,
-            peso: raza.peso,
-            raza: raza.raza
-        }
-        return infoDb
-    })
-    var ApiDb = (db.concat(Api))
-    if (ApiDb) {
-        res.send(ApiDb)
-    } else {
-        res.status(404)
-    }
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
@@ -75,44 +86,48 @@ function getBuscarId(req, res, next) {
     var { id } = req.params;
     if (id.length > 20) {
         return Dog.findByPk(id)
-        .then(response => {
-            let detalles = {
-                nombre:response.name,
-                temperamento: response.Temperamentos,
-                altura: response.altura,
-                peso: response.peso,
-                años_de_vida: response.anos_de_vida
-            }
-        res.send(detalles)
-        })
+            .then(response => {
+                let detalles = {
+                    nombre: response.name,
+                    temperamento: response.Temperamentos,
+                    altura: response.altura,
+                    peso: response.peso.metric,
+                    años_de_vida: response.anos_de_vida,
+                    raza: response.raza
+                }
+                res.send(detalles)
+            })
     } else {
         return axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
-        .then(response => {
-            let intID = parseInt(id)
-            let index = response.data.map(e=> e.id).indexOf(intID)
-            let raza = response.data[index]
-            let detalles = {
-                imagen: raza.image.url,
-                nombre: raza.name,
-                raza: e.breed_group,
-                temperamento: raza.temperament,
-                altura: raza.height,
-                peso: raza.weight,
-                anos_de_vida: raza.life_span
-            }
-            res.send(detalles)
-        }).catch((error) => next(error))
+            .then(response => {
+                let intID = parseInt(id)
+                let index = response.data.map(e => e.id).indexOf(intID)
+                let raza = response.data[index]
+                let detalles = {
+                    imagen: raza.image.url,
+                    nombre: raza.name,
+                    raza: e.breed_group,
+                    temperamento: raza.temperament,
+                    altura: raza.height,
+                    peso: raza.weight.metric,
+                    anos_de_vida: raza.life_span
+                }
+                res.send(detalles)
+            }).catch((error) => next(error))
     }
 }
 
 
 
 function postFormularioDogs(req, res, next) {
-    const { name, altura, peso, anos_de_vida, raza } = req.body;
+    const { name, altura, pesoMin, pesoMax, anos_de_vida, raza } = req.body;
     let values = {
-        name: name,
+        name: name.charAt(0).toUpperCase() + name.slice(1),
         altura: altura,
-        peso: peso,
+        peso: {
+            min: pesoMin,
+            max: pesoMax
+        },
         anos_de_vida: anos_de_vida,
         raza: raza
     }
@@ -121,8 +136,8 @@ function postFormularioDogs(req, res, next) {
         .catch((error) => next(error))
 }
 
-const postDogs_Temperamentos = async function(req, res){
-    const {dogid, Temperamentoid} = req.params
+const postDogs_Temperamentos = async function (req, res) {
+    const { dogid, Temperamentoid } = req.params
     var dog = await Dog.findByPk(dogid)
     var temperamento = await Temperamento.findByPk(Temperamentoid)
     var rest = await dog.addTemperamentos(temperamento)

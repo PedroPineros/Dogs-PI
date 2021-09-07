@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     peso: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: false,
     },
     anos_de_vida: {
