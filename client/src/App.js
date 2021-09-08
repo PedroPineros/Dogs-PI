@@ -4,6 +4,8 @@ import {Route} from 'react-router-dom'
 import Home from './components/Home';
 import PaginaPrincipal from './components/PaginaPrincipal';
 import Navbar from './components/Navbar';
+import Dog  from './components/Dog';
+import AddDogs from './components/addPerro';
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
       <Route exact path='/' component={Home}/>
       <Route path='/paginaprincipal' component={Navbar}/>
       <Route path='/paginaprincipal' component={PaginaPrincipal}/>
+      <Route path='/DogDetalles' component={Dog}/>
+      <Route path='/addDog' component={AddDogs}/>
     </div>
   );
 }

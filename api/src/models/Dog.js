@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     altura: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: false,
     },
     peso: {

@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react'
 // import axios from 'axios'
 import './PaginaPrincipal.css'
 import { connect } from 'react-redux'
-import { getDogs, getTemperaments } from '../action/actions'
+import { getDogs, getTemperaments} from '../action/actions'
 
 export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTemperaments }) {
     //------------------------Estados----------------------------\\
-    const [stateDogs, setState] = useState([])//--> Probar con objeto {}
+    const [stateDogs, setState] = useState([])
     const [stateIndice, IndiceState] = useState({
         contador: 0,
         mayor: 0,
         menor: 0
     })
     const [stateDogsAll, DogsAllState] = useState([])
+    
     //------------------------------------------------------------\\
     useEffect(() => {
         getTemperaments()
@@ -47,12 +48,8 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
             alert("No hay mas para mostrar")
         }
     }
-    console.log(stateIndice.contador)
-    //-----------------------------Ordenar Desc && Asc && peso max && min------------------------------\\
-    // var peso = stateDogsAll.map((e) => e.peso.metric)
-    // peso.forEach((e, i)=> console.log(e[i] ))
-    // var algo = stateDogsAll.map(e=> e.peso.slice(-2)).sort((a,b) => b.localeCompare(a))
-
+    //-----------------------------Ordenar Desc && Asc && peso max && min <-------
+    
     const handleOrder = (e) => {
         let DogsAll = [...stateDogsAll]
         if (e.target.value === "asc") {
@@ -66,22 +63,23 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
             DogsAllState(DogsAll)
         } else if (e.target.value === "peso_max") {
             DogsAll.sort((a, b) => b.peso.max - a.peso.max)
-            // DogsAll.sort((a, b) => b.peso.localeCompare(a.peso))
             DogsAllState(DogsAll)
-            console.log(DogsAll)
+            
         }
 
     }
-    //-----------------------------filter----------------------------------------\\
+    //-----------------------------filter Temperamentos<-----------------\\
     const handleFilterTemp = (e) => {
         let temperamentos = e.target.value
         let DogsAll = [...Dogstate]
         // console.log(DogsAll[1].temperamento.includes(temperamentos))
-        DogsAll = DogsAll.filter(elem => elem.temperamento !== "").filter(elem => elem.temperamento !== undefined )
+        DogsAll = DogsAll.filter(elem => elem.temperamento !== "").filter(elem => elem.temperamento !== undefined)
         DogsAllState(DogsAll.filter(e => e.temperamento.includes(temperamentos)))
-        console.log(DogsAll.filter(e => e.temperamento.includes(temperamentos)))
-        
+        // console.log(DogsAll.filter(e => e.temperamento.includes(temperamentos)))
+
     }
+    let temp = [...TemperamentsState]
+    
 
     //------------ Filter razas---------\\
     const handleFilterRaza = (e) => {
@@ -89,13 +87,14 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
         let DogsAll = [...Dogstate]
         let razas = DogsAll.filter(e => e.raza === r)
         DogsAllState(razas)
-        console.log(razas)
+        
     }
     let DogsAll = [...Dogstate]
-    let DogstateSet=[...DogsAll.map(e => e.raza)]
-    let razasDogs = DogstateSet.filter(e => e !== "").filter(e => e !== undefined)
-    DogstateSet = [...new Set(razasDogs.map(e => e.charAt(0).toUpperCase() +  e.slice(1)))]
-    // console.log(razasDogs.map(e => e.charAt(0).toUpperCase() + e.slice(1) ) )
+    let DogstateSet = [...DogsAll.map(e => e.raza)]
+    let razasDogs = DogstateSet.filter(e => e !== "").filter(e => e !== undefined).filter(e => e !== null)
+    DogstateSet = [...new Set(razasDogs.map(e => e))]
+    console.log(stateDogs)
+ 
 
     //---------------------------------------------------------------------------\\
     return (
@@ -104,17 +103,18 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
             <button value="desc" onClick={handleOrder}>Ordenar descendente</button>
             <button value="peso_min" onClick={handleOrder}>Peso -</button>
             <button value="peso_max" onClick={handleOrder}>Peso +</button>
+            
             <select onClick={handleFilterTemp}>
-                <option >selecionar</option>
-                {TemperamentsState.map(e => {
+                <option >Temperamentos</option>
+                {temp.map(e => {
                     return (
-                        <option value={e}>{e}</option>
+                        <option value={e.name}>{e.name}</option>
                     )
                 })
                 }
             </select>
             <select onClick={handleFilterRaza}>
-                <option >Selecionar</option>
+                <option >Razas</option>
                 {DogstateSet.map(e => {
                     return (
                         <option>{e}</option>

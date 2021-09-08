@@ -22,14 +22,24 @@ const getDogs = async function (req, res, next) {
         let Api = dogsApiResponse.data.map(razaApi => {
             var MinString = razaApi.weight.metric.slice(0, -4)
             var MinInt = parseInt(MinString)
-            var MinString = razaApi.weight.metric.slice(4)
-            var MaxInt = parseInt(MinString)
+            var MaxString = razaApi.weight.metric.slice(4)
+            var MaxInt = parseInt(MaxString)
+            //---altura
+            var alturaMinString = razaApi.height.metric.slice(0, -4)
+            var alturaMinInt = parseInt(alturaMinString)
+            var alturaMaxString = razaApi.height.metric.slice(4)
+            var alturaMaxInt = parseInt(alturaMaxString)
+            //----
             let infoApi = {
                 id: razaApi.id,
                 nombre: razaApi.name,
                 peso: {
                     min: MinInt,
                     max: MaxInt,
+                },
+                altura: {
+                    min: alturaMinInt,
+                    max: alturaMaxInt
                 },
                 imagen: razaApi.image.url,
                 temperamento: razaApi.temperament,
@@ -42,7 +52,10 @@ const getDogs = async function (req, res, next) {
                 id: raza.id,
                 nombre: raza.name,
                 temperamento: raza.Temperamentos.map(e=> e.name).join(","),
-        
+                altura:{
+                    min: raza.altura.min,
+                    max: raza.altura.max,
+                },
                 peso: {
                     min: raza.peso.min,
                     max: raza.peso.max,
@@ -58,27 +71,71 @@ const getDogs = async function (req, res, next) {
             res.status(404)
         }
     } catch (err) {
-        console.log(err)
+        // console.log(err)
     }
 }
 
-function getBuscarDogs(req, res, next) {
-    const { name } = req.query;
-    let nombre = name.charAt(0).toUpperCase() + name.slice(1)
-    const dogsApi = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
-    const dogsDb = Dog.findAll()
-    Promise.all([dogsApi, dogsDb])
-        .then((response) => {
-            let [dogsApiResponse, dogsDbResponse] = response;
-            let nombreRazas = dogsDbResponse.concat(dogsApiResponse.data).map(razas => razas.name)
-            let dbnames = nombreRazas.filter(e => e.includes(nombre) || e.includes(name))
-            if (dbnames.length) {
-                res.send(dbnames)
-            } else {
-                res.status(400).send('Raza de Perros no existe')
+const getBuscarDogs = async function(req, res, next) {
+    try {
+        const { name } = req.query;
+        let nombre = name.charAt(0).toUpperCase() + name.slice(1)
+        let dogsApiResponse = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
+        let dogsDbResponse = await Dog.findAll({ include: Temperamento }).then(response => { return response })
+        let Api = dogsApiResponse.data.map(razaApi => {
+            var MinString = razaApi.weight.metric.slice(0, -4)
+            var MinInt = parseInt(MinString)
+            var MaxString = razaApi.weight.metric.slice(4)
+            var MaxInt = parseInt(MaxString)
+            //---altura
+            var alturaMinString = razaApi.height.metric.slice(0, -4)
+            var alturaMinInt = parseInt(alturaMinString)
+            var alturaMaxString = razaApi.height.metric.slice(4)
+            var alturaMaxInt = parseInt(alturaMaxString)
+            //----
+            let infoApi = {
+                id: razaApi.id,
+                nombre: razaApi.name,
+                peso: {
+                    min: MinInt,
+                    max: MaxInt,
+                },
+                altura: {
+                    min: alturaMinInt,
+                    max: alturaMaxInt
+                },
+                imagen: razaApi.image.url,
+                temperamento: razaApi.temperament,
+                raza: razaApi.breed_group
             }
+            return infoApi
+        });
+        let db = dogsDbResponse.map(raza => {
+            let infoDb = {
+                id: raza.id,
+                nombre: raza.name,
+                temperamento: raza.Temperamentos.map(e=> e.name).join(","),
+                altura:{
+                    min: raza.altura.min,
+                    max: raza.altura.max,
+                },
+                peso: {
+                    min: raza.peso.min,
+                    max: raza.peso.max,
+                },
+                raza: raza.raza
+            }
+            return infoDb
         })
-        .catch((error) => next(error))
+        var nombreRazas = (db.concat(Api))
+        let dbnames = nombreRazas.filter(e => e.nombre === name || e.nombre === nombre)
+        if (dbnames) {
+            res.send(dbnames)
+        } else {
+            res.status(404)
+        }
+    } catch (err) {
+        // console.log(err)
+    }
 
 }
 
@@ -120,10 +177,13 @@ function getBuscarId(req, res, next) {
 
 
 function postFormularioDogs(req, res, next) {
-    const { name, altura, pesoMin, pesoMax, anos_de_vida, raza } = req.body;
+    const { name, alturaMin,alturaMax, pesoMin, pesoMax, anos_de_vida, raza } = req.body;
     let values = {
         name: name.charAt(0).toUpperCase() + name.slice(1),
-        altura: altura,
+        altura: {
+            min: alturaMin,
+            max: alturaMax
+        },
         peso: {
             min: pesoMin,
             max: pesoMax
