@@ -1,7 +1,149 @@
-img{
-    width: 100px;
+.Dogimg{
+    width: 150px;
+    height: 150px;
     border-radius: 10px;
+    -webkit-box-shadow: -1px 3px 15px 9px rgba(62,71,64,0.46); 
+box-shadow: -1px 3px 15px 9px rgba(62,71,64,0.46);
 }
 li{
     list-style: none;
 }
+.cards{
+    width: 98vw;
+    display: inline-grid;
+    grid-gap: 4rem 1rem;
+    grid-template-columns: 25vw 25vw 25vw;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    justify-items: end;
+}
+.card{
+    width: 50%;
+    height: 95%;
+    display: flex;
+    padding: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: 5px;
+    background-color: rgba(88, 107, 143, 0.411);
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+.card img:hover{
+    width: 180px;
+    height: 180px;
+}
+.card h5{
+    margin: 5px;
+}
+.card h5{
+    margin-top: 0;
+    color: rgb(68, 101, 161);
+}
+.card h4{
+    margin: 5px;
+    color: rgb(36, 27, 116);
+}
+.dogall{
+    margin-bottom: 50px;
+}
+.btnBN{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.filtro{
+    width: 30px;
+}
+.btns{
+    width: 80px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+    font-family: 'Righteous', cursive;
+}
+
+.filtroSelect{
+    background: transparent;
+    border: none;
+   font-size: 14px;
+   height: 30px;
+   padding: 5px;
+   width: 80px;
+   font-family: 'Righteous', cursive;
+   border:0.1em solid #FFFFFF;
+   outline: none;
+}
+.filtroSelect:hover{
+    color:#2533ad;
+    background-color:#FFFFFF
+}
+.todosDogs{
+    background: transparent;
+    border:0.1em solid #FFFFFF;
+    text-decoration:none;
+    font-weight:14px;
+    color:#000000;   
+    font-family: 'Righteous', cursive;
+    height: 30px;
+}
+.todosDogs:hover{
+    color:#2533ad;
+    background-color:#FFFFFF
+}
+
+
+
+@media only screen and (min-width: 200px) and (max-width: 500px) {
+    .cards{
+        width: 95vw;
+        display: grid;
+        grid-gap: 1rem 1rem;
+        grid-template-columns: auto;
+        grid-template-rows: auto ;
+        align-items: center;
+        justify-content: center;
+        margin: 30px;
+        position: relative;
+        margin-top: 100px;
+    }
+    .dogall{
+        margin-top: 10px;
+        position: relative;
+    }
+    .btns{
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        z-index: 2;
+    }
+    .card{
+        margin-left: 55px;
+        margin-right: 55px;
+    }
+   
+    
+}
+/* @media only screen and (min-width: 500px) and (max-width: 800px) {
+    .cards{
+        width: 95vw;
+        display: grid;
+        grid-gap: 0rem 0rem;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto;
+        align-items: center;
+        justify-content: center;
+        margin: 30px;
+        position: relative;
+        margin-top: 100px;
+        
+    }
+    .btns{
+        z-index: 2;
+    }
+} */

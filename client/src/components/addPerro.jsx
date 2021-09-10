@@ -1,7 +1,8 @@
-import 'core-js'
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getDogs, getTemperaments, postAdd, postConection } from '../action/actions';
+import './addPerro.css'
+import fondo from '../img/dogicon.png'
 
 export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperaments, postConection, Form }) {
     const [stateTemperamentos, setTemp] = useState([])
@@ -47,7 +48,7 @@ export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperament
     }
 
 
-    console.log(Form)
+    
     return (
         <div>
             <form action="">
@@ -65,9 +66,9 @@ export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperament
                 <input type="text" onChange={handleChange} name="anos_de_vida" placeholder="Años de vida" />
                 <select onChange={handleChange} name="raza">
                     <option >Razas</option>
-                    {DogstateSet.map(e => {
+                    {DogstateSet.map((e,i) => {
                         return (
-                            <option>{e}</option>
+                            <option key={i}>{e}</option>
                         )
                     })
                     }
@@ -76,13 +77,15 @@ export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperament
                     <option >Temperamento</option>
                     {temp.map(e => {
                         return (
-                            <option value={e.id}>{e.name}</option>
+                            <option key={e.id} value={e.id}>{e.name}</option>
                         )
                     })
                     }
                 </select>
             </form>
+            <div>
             <button onClick={handleGuardar}>Guardar</button>
+            </div>
         </div>
     )
 }

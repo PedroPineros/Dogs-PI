@@ -1,0 +1,122 @@
+nav{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(62, 96, 209, 0.685);
+    border-radius: 5px;
+}
+.ulNav{
+    width: 100vw;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+.ulBuscar{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+li{
+    margin: 10px;   
+}
+.menu{
+    width: auto;
+    list-style: none;
+    text-decoration: none;
+    background-color: rgb(241, 255, 255);
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 10px;
+    color:rgba(62, 96, 209, 0.685);
+}
+.menu:hover{
+    color: rgb(218, 181, 79);
+    background-color: rgb(0, 0, 0);
+}
+.dogIcon{
+    position: absolute;
+    width: 60px;
+    margin-top: -10px;
+}
+.dogIcon:hover{
+    width: 65px;
+}
+
+.NavMenu{
+    width:98vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+.NavBuscar{
+    width: 98vw;
+    display: flex;
+    justify-content: center;
+}
+
+input[type=text] {
+    height: 10px;
+    padding: 6px;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Righteous', cursive;
+  }
+  .btnlink{
+      text-decoration: none;
+  }
+  .huella{
+      width: 25px;
+  }
+  .imgbuscar:hover{
+      background-color: rgb(38, 51, 56);
+      border-radius: 10px;
+  }
+  .NavBuscar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+@media only screen and (min-width: 200px) and (max-width: 500px) {
+    .nav{
+        position: relative;
+        width: 100%;
+        display: flex;
+        background-color: rgba(172, 167, 167, 0.685);
+        border-radius: 5px;
+        margin: 5px;
+        align-items: center;
+        flex-direction: column;
+    }
+    .NavMenu{
+        width:100vw;
+        display: flex;
+        justify-content: center;
+    }
+    .NavBuscar{
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+   .menu{
+    list-style: none;
+    text-decoration: none;
+    background-color: rgba(193, 199, 199, 0.918);
+    padding: 5px;
+    font-size: 10px;
+    border-radius: 10px; 
+   }
+   .dogIcon{
+    position: absolute;
+    width: 30px;
+    margin-top: 19px;
+    }
+  }
+  

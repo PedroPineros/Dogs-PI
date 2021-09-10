@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
+import "./Navbar.css"
 import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { getBuscar } from '../action/actions'
+import dogicon from '../img/perro.png'
+import huellaicon from '../img/desaparecido.png'
 
 export function Navbar({ getBuscar }) {
     const [stateBuscar, setBuscar] = useState()
     //----------- Buscar Dog <---------------\\
     const handleChange = (e) => {
-        
-            e.preventDefault()
-            setBuscar(e.target.value)
-      
+
+        e.preventDefault()
+        setBuscar(e.target.value)
+
     }
     const handleBuscar = (e) => {
         e.preventDefault()
@@ -19,16 +22,19 @@ export function Navbar({ getBuscar }) {
 
     return (
         <nav>
-            <div>
-                <ul>
-                    <li><Link to='/' >Home</Link></li>
-                    <li><Link to='/paginaprincipal'>Pagina Principal</Link></li>
-                    <li><Link to='/addDog'>Agregar Perro</Link></li>
+            <div className="NavMenu">
+                <ul className="ulNav">
+                    <NavLink className="" to='/' ><img className="dogIcon" src={dogicon} alt="" /></NavLink>
+                    <li><NavLink className="menu" to='/' >Home</NavLink></li>
+                    <li><NavLink className="menu" to='/paginaprincipal'>Pagina Principal</NavLink></li>
+                    <li><NavLink className="menu" to='/addDog'> Agregar Perro</NavLink></li>
                 </ul>
             </div>
-            <div>
-                <input onChange={handleChange} placeholder='Buscar Perro' />
-                <button onClick={handleBuscar}><NavLink to='/DogDetalles'>Buscar</NavLink></button>
+            <div className="NavBuscar">
+                <ul className="ulBuscar">
+                    <li> <input onChange={handleChange} placeholder='Buscar Perro' type="text" /></li>
+                    <li onClick={handleBuscar}  className="imgbuscar"><NavLink className="btnlink" to='/DogDetalles'><img className="huella" src={huellaicon} alt="" /></NavLink></li>
+                </ul>
             </div>
 
         </nav>

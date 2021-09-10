@@ -13,7 +13,7 @@ function Home({getDogs}) {
 
     return (
         <div className="contenedorImg">
-            <Link to='/paginaprincipal'><img src={logo} /></Link>
+            <Link to='/paginaprincipal'><img className="logo" src={logo} /></Link>
         </div>
     )
 }
