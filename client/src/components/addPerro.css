@@ -1,3 +1,114 @@
-form{
-    position:absolute; z-index:1;
+.ContenedorForm{
+    display: flex;
+    position: relative;
+    width: 98vw;
+    height: 85vh;
+}
+.formCentro{
+    width: 63vw;
+    height: 49vw;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.formCentro h2{
+    margin: 0;
+}
+.form{
+    width: 423px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;    
+}
+.form1{
+    margin: 15px;
+    background-color: rgba(128, 189, 204, 0.712);
+    border-radius: 10px;
+    padding: 10px;
+}
+.form2{
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(128, 189, 204, 0.712);
+    border-radius: 10px;
+    padding: 10px;
+}
+.form3{
+    width: 393px;
+    background-color: rgba(128, 189, 204, 0.712);
+    border-radius: 10px;
+}
+.form input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.form .form2 select{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 20px;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Righteous', cursive;
+    color: rgb(119, 114, 114);
+}
+.imgsave{
+    width: 50px;
+}
+.guardar{
+    border-radius: 10px;
+    border: none;
+    color: rgba(249, 249, 250, 0.034);
+}
+.guardar:hover{
+    background-color: rgba(62, 96, 209, 0.685);
+}
+input[type=number] {
+    height: 10px;
+    padding: 6px;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Righteous', cursive;
+  }
+
+  @media only screen and (min-width: 100px) and (max-width: 400px) {
+    .form {
+        width: 423px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .form1{
+        margin: 15px;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(128, 189, 204, 0.712);
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .form2{
+        margin: 15px;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(128, 189, 204, 0.712);
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .formCentro {
+        width: 63vw;
+        display: flex;
+        margin: auto;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
 }

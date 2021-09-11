@@ -10,10 +10,8 @@ export function Navbar({ getBuscar }) {
     const [stateBuscar, setBuscar] = useState()
     //----------- Buscar Dog <---------------\\
     const handleChange = (e) => {
-
         e.preventDefault()
         setBuscar(e.target.value)
-
     }
     const handleBuscar = (e) => {
         e.preventDefault()

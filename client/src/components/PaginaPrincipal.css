@@ -3,7 +3,9 @@
     height: 150px;
     border-radius: 10px;
     -webkit-box-shadow: -1px 3px 15px 9px rgba(62,71,64,0.46); 
-box-shadow: -1px 3px 15px 9px rgba(62,71,64,0.46);
+    box-shadow: -1px 3px 15px 9px rgba(62,71,64,0.46);
+    transition-duration: 0.5s;
+
 }
 li{
     list-style: none;
@@ -16,6 +18,7 @@ li{
     grid-template-rows: auto auto;
     justify-content: center;
     justify-items: end;
+
 }
 .card{
     width: 50%;
@@ -29,21 +32,26 @@ li{
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+    border-radius: 20px 60px 20px 60px;
 }
 .card img:hover{
     width: 180px;
     height: 180px;
 }
 .card h5{
-    margin: 5px;
+    margin: 3px;
 }
 .card h5{
     margin-top: 0;
     color: rgb(68, 101, 161);
 }
 .card h4{
-    margin: 5px;
+    margin: 0px;
     color: rgb(36, 27, 116);
+}
+.card h6{
+    margin: 0;
+    color: rgb(68, 101, 161)
 }
 .dogall{
     margin-bottom: 50px;
@@ -54,6 +62,36 @@ li{
     justify-content: space-evenly;
     align-items: center;
 }
+.btnBN{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: flex-end;
+    margin-left: 244px;
+    margin-right: 223px;
+    margin-top: 44px;
+}
+.btnBN button{
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.507); 
+    color: black; 
+    border: 2px solid #008CBA;
+    border-radius: 5px 10px 5px 10px;
+}
+.btnBN button:hover{
+    background-color: #008CBA;
+    color: white;
+}
+
 .filtro{
     width: 30px;
 }
@@ -97,18 +135,17 @@ li{
 
 
 
-@media only screen and (min-width: 200px) and (max-width: 500px) {
+@media only screen and (min-width: 200px) and (max-width: 600px) {
     .cards{
-        width: 95vw;
+        width: 100vw;
         display: grid;
-        grid-gap: 1rem 1rem;
-        grid-template-columns: auto;
-        grid-template-rows: auto ;
+        grid-gap: 4rem;
+        grid-template-columns: 93vw;
+        grid-template-rows: auto;
         align-items: center;
         justify-content: center;
-        margin: 30px;
+        margin-top: 30px;
         position: relative;
-        margin-top: 100px;
     }
     .dogall{
         margin-top: 10px;
@@ -126,24 +163,28 @@ li{
         margin-left: 55px;
         margin-right: 55px;
     }
-   
+    .btnBN{
+    display: flex;
+    margin-top: 44px;
+    flex-direction: row;
+    margin-left: 0;
+    margin-right: 0;
+    }
     
 }
-/* @media only screen and (min-width: 500px) and (max-width: 800px) {
+@media only screen and (min-width: 600px) and (max-width: 800px) {
     .cards{
-        width: 95vw;
-        display: grid;
-        grid-gap: 0rem 0rem;
-        grid-template-columns: auto auto;
-        grid-template-rows: auto;
-        align-items: center;
+        width: 98vw;
+        display: inline-grid;
+        grid-gap: 4rem 0rem;
+        grid-template-columns: 50vw 50vw;
+        grid-template-rows: auto auto;
         justify-content: center;
-        margin: 30px;
-        position: relative;
-        margin-top: 100px;
+        justify-items: center;
         
     }
     .btns{
         z-index: 2;
     }
-} */
+    
+}

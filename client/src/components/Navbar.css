@@ -1,11 +1,13 @@
 nav{
     position: relative;
-    width: 100%;
+    width: 97vw;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     background-color: rgba(62, 96, 209, 0.685);
     border-radius: 5px;
+    margin: 9px;
+    align-content: center;
 }
 .ulNav{
     width: 100vw;
@@ -34,6 +36,7 @@ li{
     font-size: 15px;
     border-radius: 10px;
     color:rgba(62, 96, 209, 0.685);
+    transition-duration: 0.7s;
 }
 .menu:hover{
     color: rgb(218, 181, 79);
@@ -43,21 +46,24 @@ li{
     position: absolute;
     width: 60px;
     margin-top: -10px;
+    transition-duration: 0.7s;
+
 }
 .dogIcon:hover{
     width: 65px;
 }
 
 .NavMenu{
-    width:98vw;
+    width:96vw;
     display: flex;
     justify-content: center;
     margin-top: 5px;
 }
 .NavBuscar{
-    width: 98vw;
     display: flex;
+    flex-direction: row;
     justify-content: center;
+    width: 96vw;
 }
 
 input[type=text] {
@@ -84,17 +90,7 @@ input[type=text] {
     justify-content: center;
   }
 
-@media only screen and (min-width: 200px) and (max-width: 500px) {
-    .nav{
-        position: relative;
-        width: 100%;
-        display: flex;
-        background-color: rgba(172, 167, 167, 0.685);
-        border-radius: 5px;
-        margin: 5px;
-        align-items: center;
-        flex-direction: column;
-    }
+@media only screen and (min-width: 400px) and (max-width: 600px) {
     .NavMenu{
         width:100vw;
         display: flex;
@@ -115,8 +111,26 @@ input[type=text] {
    }
    .dogIcon{
     position: absolute;
-    width: 30px;
-    margin-top: 19px;
+    width: 49px;
+    margin-top: 1px;
+    left: 20px;
+    transition-duration: 0.7s;
+    }
+  }
+  @media only screen and (min-width: 100px) and (max-width: 400px) {
+    nav{
+        width: 97vw;
+        margin: 0;
+    }
+   .dogIcon{
+    position: absolute;
+    width: 29px;
+    margin-top: 32px;
+    left: 20px;
+    transition-duration: 0.7s;
+    }
+    .ulNav li a{
+        font-size: 13px;
     }
   }
   

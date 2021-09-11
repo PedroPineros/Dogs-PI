@@ -22,9 +22,11 @@ const rootReducer = function(state = initialState, action){
         case GET_BUSCAR:
             let pesos= []
             let alturas = []
+            console.log(action.payload[0])
             pesos.push(action.payload[0].peso.min,action.payload[0].peso.max)
             alturas.push(action.payload[0].altura.min,action.payload[0].altura.max)
             return {...state, Dog: action.payload[0], peso:pesos, altura:alturas}
+
         case POST_GUARDAR:
             return {...state, DogAdd: action.payload}
         default:

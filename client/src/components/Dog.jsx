@@ -1,54 +1,71 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { getDogs } from '../action/actions'
-import defaultimg from '../img/default.png'
+import defaultimg from '../img/fresco.png'
+import buscar from '../img/default.png'
+import './Dog.css'
 
-export function Dog({ DogState, getDogs, Dogspesos, DogsAltura }) {
+export function Dog({ DogState, getDogs, Dogspesos, DogsAltura, Dogs }) {
     useEffect(() => {
         getDogs()
     }, [])
 
-    console.log(Dogspesos)
-    if(DogState.imagen){
+
+    if (!DogState.nombre) {
         return (
             <div>
-                <img src={DogState.imagen} alt="" />
-                <h2>Nombre {DogState.nombre}</h2>
-                <ul>
-                    <h4>Peso</h4>
-                    <li>Min: {Dogspesos[0]}</li>
-                    <li>Max: {Dogspesos[1]}</li>
-                </ul>
-                <ul>
-                <h4>Altura</h4>
-                <li>Min: {DogsAltura[0]}</li>
-                    <li>Max: {DogsAltura[1]}</li>
-            </ul>
-                <h4>Temperamentos</h4>
-                <ul>
-                    <li>{DogState.temperamento}</li>
-                </ul>
+                <h1>Busque un nombre de Dog valido</h1>
+                <img className="nada" src={buscar} alt="" />
             </div>
         )
-    }else{
+    } else if (DogState.imagen) {
+        let Temp = DogState.temperamento.split(",")
         return (
-            <div>
-                <img src={defaultimg} alt="" />
-                <h2>Nombre {DogState.nombre}</h2>
-                <ul>
-                    <h4>Peso</h4>
-                    <li>Min: {Dogspesos[0]}</li>
-                    <li>Max: {Dogspesos[1]}</li>
-                </ul>
-                <ul>
-                <h4>Altura</h4>
-                <li>Min: {DogsAltura[0]}</li>
-                    <li>Max: {DogsAltura[1]}</li>
-            </ul>
-                <h4>Temperamentos</h4>
-                <ul>
-                    <li>{DogState.temperamento}</li>
-                </ul>
+            <div className="contenedorDetalles">
+                <div className="detalles">
+                    <div className="imgDetalles">
+                        <h2>{DogState.nombre}</h2>
+                        <img className="imgDet" src={DogState.imagen} alt="" />
+                    </div>
+                    <div className="masDetalles">
+                        <h4>Raza<h5>{DogState.raza}</h5></h4>
+                        <h4>Peso Minimo: <h5>{Dogspesos[0]} Kg</h5></h4>
+                        <h4>Peso Maximo: <h5>{Dogspesos[1]} Kg</h5></h4>
+                        <h4>Altura Minima <h5>{DogsAltura[0]} cm</h5></h4>
+                        <h4>Altura Maxima <h5>{DogsAltura[1]} cm</h5></h4>
+                        <h4>Temperamentos {Temp.map(e => {
+                            return (
+                                <h5>{e}</h5>
+                            )
+                        })}</h4>
+
+                    </div>
+                </div>
+            </div>
+        )
+    } else {
+        let Temp = DogState.temperamento.split(",")
+        return (
+            <div className="contenedorDetalles">
+                <div className="detalles">
+                    <div className="imgDetalles">
+                        <h2>{DogState.nombre}</h2>
+                        <img className="imgDet" src={defaultimg} alt="" />
+                    </div>
+                    <div className="masDetalles">
+                        <h4>Raza<h5>{DogState.raza}</h5></h4>
+                        <h4>Peso Minimo: <h5>{Dogspesos[0]} Kg</h5></h4>
+                        <h4>Peso Maximo: <h5>{Dogspesos[1]} Kg</h5></h4>
+                        <h4>Altura Minima <h5>{DogsAltura[0]} cm</h5></h4>
+                        <h4>Altura Maxima <h5>{DogsAltura[1]} cm</h5></h4>
+                        <h4>Temperamentos {Temp.map(e => {
+                            return (
+                                <h5>{e}</h5>
+                            )
+                        })}</h4>
+
+                    </div>
+                </div>
             </div>
         )
     }
@@ -56,10 +73,11 @@ export function Dog({ DogState, getDogs, Dogspesos, DogsAltura }) {
 
 
 const mapStateToProps = (state) => {
-    return { 
+    return {
         DogState: state.Dog,
         Dogspesos: state.peso,
-        DogsAltura: state.altura
+        DogsAltura: state.altura,
+        Dogs: state.Dogs
     }
 }
 const mapDispatchToProps = (dispatch) => {

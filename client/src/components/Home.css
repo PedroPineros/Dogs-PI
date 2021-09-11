@@ -5,8 +5,11 @@
     width: 100vw;
     justify-content: center;
 }
-
+.logo{
+    margin: 40 px;
+}
 .logo:hover{
+    transition-duration: 0.3s;
     background-color: rgba(62, 96, 209, 0.685);
     border-radius: 50px;
     padding: 10px;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './PaginaPrincipal.css'
 import { connect } from 'react-redux'
 import { getDogs, getTemperaments } from '../action/actions'
-import defaultimg from '../img/default.png';
+import dfault from '../img/perropp.png';
 
 export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTemperaments }) {
     //------------------------Estados----------------------------\\
@@ -176,9 +176,10 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
             <div className="cards">
                 {stateDogs.map((e, i) => {
                     if (!e.imagen) {
+                        let Temp = e.temperamento.split(",")
                         return (
                             <div key={i} className="card">
-                                <img className="Dogimg" src={defaultimg} alt=""></img>
+                                <img className="Dogimg" src={dfault} alt=""></img>
                                 <h4>Nombre</h4>
                                 <h5>{e.nombre}</h5>
                                 <h4>Peso Minimo</h4>
@@ -186,7 +187,11 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
                                 <h4>Peso Maximo</h4>
                                 <h5>{e.peso.max} Kg</h5>
                                 <h4>Temperamentos</h4>
-                                <h5>{e.temperamento}</h5>
+                                <p>{Temp.map(e=>{
+                                    return (
+                                        <h5>{e}</h5>
+                                    )
+                                })}</p>
                             </div>
                         )
                     }
@@ -201,7 +206,6 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
                             <h5>{e.peso.max} Kg</h5>
                             <h4>Temperamentos</h4>
                             <h5>{e.temperamento}</h5>
-
                         </div>
                     )
                 }
