@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import "./Navbar.css"
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { getBuscar } from '../action/actions'
+import { getBuscar, vacioDetalles } from '../action/actions'
 import dogicon from '../img/perro.png'
 import huellaicon from '../img/desaparecido.png'
 
-export function Navbar({ getBuscar }) {
-    const [stateBuscar, setBuscar] = useState()
+export function Navbar({ getBuscar, vacioDetalles, Dogstate }) {
+    const [stateBuscar, setBuscar] = useState("")
     //----------- Buscar Dog <---------------\\
     const handleChange = (e) => {
         e.preventDefault()
@@ -15,7 +15,16 @@ export function Navbar({ getBuscar }) {
     }
     const handleBuscar = (e) => {
         e.preventDefault()
-        getBuscar(stateBuscar)
+        let upper = stateBuscar.charAt(0).toUpperCase()+stateBuscar.slice(1)
+        let lower = stateBuscar.charAt(0).toLowerCase()+stateBuscar.slice(1)
+        let Dogs = Dogstate.map(e=> e.nombre)
+        if(Dogs.includes(upper)){
+            getBuscar(upper)
+        }else if(Dogs.includes(lower)){
+            getBuscar(lower)
+        }else{
+            vacioDetalles()
+        }
     }
 
     return (
@@ -40,7 +49,13 @@ export function Navbar({ getBuscar }) {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        getBuscar: (name) => dispatch(getBuscar(name))
+        getBuscar: (name) => dispatch(getBuscar(name)),
+        vacioDetalles: () => dispatch(vacioDetalles())
     }
 }
-export default connect(null, mapDispatchToProps)(Navbar)
+const mapStateToProps = (state) => {
+    return {
+        Dogstate: state.Dogs
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

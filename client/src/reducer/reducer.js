@@ -3,6 +3,7 @@ export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS'
 export const GET_BUSCAR = 'GET_BUSCAR'
 export const POST_GUARDAR = 'POST_GUARDAR'
 export const POST_CONECTION = 'POST_CONECTION'
+export const VACIODETALLES = 'VACIO_DETALLES'
 
 const initialState = {
     Dogs: [],
@@ -29,6 +30,8 @@ const rootReducer = function(state = initialState, action){
 
         case POST_GUARDAR:
             return {...state, DogAdd: action.payload}
+        case VACIODETALLES:
+            return{...state, Dog:{}}
         default:
           return state
     }

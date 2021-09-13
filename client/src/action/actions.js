@@ -1,4 +1,4 @@
-import { GET_DOGS, GET_TEMPERAMENTS, GET_BUSCAR, POST_GUARDAR,POST_CONECTION} from "../reducer/reducer";
+import { GET_DOGS, GET_TEMPERAMENTS, GET_BUSCAR, POST_GUARDAR,POST_CONECTION, VACIODETALLES} from "../reducer/reducer";
 import axios from 'axios'
 
 
@@ -44,4 +44,10 @@ export function getDogs(){
             .then(response => {dispatch({type: POST_CONECTION, payload:response})})
             .catch(err =>(console.log("error : " + err)))
         }
+    }
+
+    export function vacioDetalles(){
+        return {
+            type: VACIODETALLES, payload: ""
+        } 
     }

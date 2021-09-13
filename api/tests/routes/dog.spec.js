@@ -3,13 +3,20 @@ const { expect } = require('chai');
 const session = require('supertest-session');
 const app = require('../../src/app.js');
 const { Dog, conn } = require('../../src/db.js');
+const {v4: uuidv4} = require("uuid")
 
 const agent = session(app);
 const dog = {
-  name: 'Pug',
+    id: uuidv4(),
+    name: "Pug",
+    altura: {min: 5, max: 47},
+    peso: {min: 40, max: 50},
+    anos_de_vida: 63,
+    raza: "Toy"
+
 };
 
-describe('Videogame routes', () => {
+describe('Dogs routes', () => {
   before(() => conn.authenticate()
   .catch((err) => {
     console.error('Unable to connect to the database:', err);

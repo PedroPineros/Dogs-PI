@@ -7,7 +7,7 @@ import save from '../img/pg.png'
 
 export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperaments, postConection, Form }) {
     const [stateTemperamentos, setTemp] = useState([])
-    const [stateAdd, AddState] = useState({
+    const [stateAdd, setAdd] = useState({
         name: "",
         alturaMin: parseInt(""),
         alturaMax: parseInt(""),
@@ -17,7 +17,6 @@ export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperament
         raza: ""
     })
     const [stateT, setT] = useState([])
-
     useEffect(() => {
         getDogs()
         getTemperaments()
@@ -29,12 +28,16 @@ export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperament
     }, [Form])
 
     const handleChange = (e) => {
-        AddState({ ...stateAdd, [e.target.name]: e.target.value })
+        setAdd({ ...stateAdd, [e.target.name]: e.target.value })
     }
     const handleGuardar = (e) => {
         e.preventDefault(e)
-        postAdd(stateAdd)
-        window.location.reload(false)
+        if (stateAdd.name && stateAdd.alturaMin && stateAdd.alturaMin && stateAdd.raza) {
+            postAdd(stateAdd)
+            alert("Raza de perro " + stateAdd.name + " creada exitosamente")
+        } else {
+            alert("Debe completar todos los datos")
+        }
     }
     //------> razas----------//
     var DogstateSet = [...new Set(Razas.map(e => e.raza))]
@@ -107,7 +110,7 @@ export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperament
                     <button className="guardar" onClick={handleGuardar}><img className="imgsave" src={save} alt="" /></button>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 const mapStateToProps = (state) => {

@@ -11,9 +11,9 @@ export function Dog({ DogState, getDogs, Dogspesos, DogsAltura, Dogs }) {
     }, [])
 
 
-    if (!DogState.nombre) {
+    if (!DogState.hasOwnProperty("nombre")) {
         return (
-            <div>
+            <div className="noEncontrado">
                 <h1>Busque un nombre de Dog valido</h1>
                 <img className="nada" src={buscar} alt="" />
             </div>

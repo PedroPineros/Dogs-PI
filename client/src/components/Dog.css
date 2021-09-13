@@ -42,7 +42,7 @@ box-shadow: 1px 2px 11px 12px rgba(29, 71, 133, 0.52);
     margin: 40px;
 }
 .nada{
-    width: 50vw;
+    width: 40vw;
 }
 @media only screen and (min-width: 100px) and (max-width: 500px){
     .detalles {
