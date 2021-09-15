@@ -90,7 +90,8 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
         } else if (e.target.value === "desc") {
             DogsAll.sort((a, b) => b.nombre.localeCompare(a.nombre))
             DogsAllState(DogsAll)
-        } else if (e.target.value === "peso_min") {
+        } 
+        else if (e.target.value === "peso_min") {
             DogsAll.sort((a, b) => a.peso.min - b.peso.min)
             DogsAllState(DogsAll)
         } else if (e.target.value === "peso_max") {
@@ -99,7 +100,7 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
         } if (e.target.value === "Todos") {
             DogsAllState(Dogstate)
         }
-
+        setIndice({contador:1, max:0, min:0})
     }
     //-----------------------------filter Temperamentos<-----------------\\
     const handleFilterTemp = (event) => {
@@ -115,6 +116,7 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
             }
             DogsAllState(all)
         }
+        setIndice({contador:1, max:0, min:0})
     }
     let temp = [...TemperamentsState]
 
@@ -129,6 +131,7 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
             let razas = DogsAll.filter(e => e.raza === r)
             DogsAllState(razas)
         }
+        setIndice({contador:1, max:0, min:0})
     }
     let DogsAll = [...Dogstate]
     let DogstateSet = [...DogsAll.map(e => e.raza)]
@@ -141,18 +144,18 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
         <div className="dogall">
             <div className="btns">
                 <h3>Filtros</h3>
-                <select className="filtroSelect" onClick={handleOrder}>
+                <select className="filtroSelect" onChange={handleOrder}>
                     <option value="Todos">AZ/ZA</option>
                     <option value="asc">A / Z</option>
                     <option value="desc">Z / A</option>
                 </select>
-                <select className="filtroSelect" onClick={handleOrder}>
+                <select className="filtroSelect" onChange={handleOrder}>
                     <option value="Todos">Peso</option>
-                    <option value="peso_min">Peso max</option>
-                    <option value="peso_max">Peso min</option>
+                    <option value="peso_min">Peso min</option>
+                    <option value="peso_max">Peso max</option>
                 </select>
 
-                <select className="filtroSelect" onClick={handleFilterTemp}>
+                <select className="filtroSelect" onChange={handleFilterTemp}>
                     <option value="Todos">Temperamentos</option>
                     {temp.map((e, i) => {
                         return (
@@ -162,7 +165,7 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
                     }
                 </select>
 
-                <select className="filtroSelect" onClick={handleFilterRaza}>
+                <select className="filtroSelect" onChange={handleFilterRaza}>
                     <option value="Todos">Razas</option>
                     {DogstateSet.map((e, i) => {
                         return (
@@ -187,9 +190,9 @@ export function PaginaPrincipal({ Dogstate, getDogs, TemperamentsState, getTempe
                                 <h4>Peso Maximo</h4>
                                 <h5>{e.peso.max} Kg</h5>
                                 <h4>Temperamentos</h4>
-                                <p>{Temp.map(e=>{
+                                <p>{Temp.map((e,i)=>{
                                     return (
-                                        <h5>{e}</h5>
+                                        <h5 key={i}>{e}</h5>
                                     )
                                 })}</p>
                             </div>

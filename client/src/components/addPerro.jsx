@@ -32,7 +32,10 @@ export function AddDogs({ postAdd, Razas, getDogs, Temperamentos, getTemperament
     }
     const handleGuardar = (e) => {
         e.preventDefault(e)
-        if (stateAdd.name && stateAdd.alturaMin && stateAdd.alturaMin && stateAdd.raza) {
+        if (stateAdd.name && stateAdd.alturaMin && 
+            stateAdd.alturaMin && stateAdd.raza &&
+            stateAdd.pesoMax && stateAdd.pesoMin &&
+            stateAdd.anos_de_vida && stateAdd.raza) {
             postAdd(stateAdd)
             alert("Raza de perro " + stateAdd.name + " creada exitosamente")
         } else {

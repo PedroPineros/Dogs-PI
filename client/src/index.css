@@ -11,7 +11,26 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-image: url('./img/fondodog1.jpg');
 }
-
+body::-webkit-scrollbar{
+  width: 8px;
+  height: 8px;
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  background: rgba(62, 96, 209, 0.685);
+  border-radius: 4px;
+}
+body::-webkit-scrollbar-thumb:active {
+  background-color: #410e83;
+}
+body::-webkit-scrollbar-track {
+  background: #2d5b86a6;
+  border-radius: 4px;
+}
+body::-webkit-scrollbar-track:hover,
+body::-webkit-scrollbar-track:active {
+background: #2d5b86a6;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

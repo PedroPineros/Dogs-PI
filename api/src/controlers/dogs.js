@@ -20,39 +20,111 @@ const getDogs = async function (req, res, next) {
         let dogsApiResponse = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
         let dogsDbResponse = await Dog.findAll({ include: Temperamento }).then(response => { return response })
         let Api = dogsApiResponse.data.map(razaApi => {
-            var MinString = razaApi.weight.metric.slice(0, -4)
-            var MinInt = parseInt(MinString)
-            var MaxString = razaApi.weight.metric.slice(4)
-            var MaxInt = parseInt(MaxString)
+            //--peso
+            var MinInt = parseInt(razaApi.weight.metric.slice(0, -4))
+            var MaxInt = parseInt(razaApi.weight.metric.slice(4))
+            var MinImperial = Math.round(parseInt(razaApi.weight.imperial.slice(0, -4))/2.2)
+            var MaxImperial = Math.round(parseInt(razaApi.weight.imperial.slice(4))/2.2)
             //---altura
-            var alturaMinString = razaApi.height.metric.slice(0, -4)
-            var alturaMinInt = parseInt(alturaMinString)
-            var alturaMaxString = razaApi.height.metric.slice(4)
-            var alturaMaxInt = parseInt(alturaMaxString)
-            //----
-            let infoApi = {
-                id: razaApi.id,
-                nombre: razaApi.name,
-                peso: {
-                    min: MinInt,
-                    max: MaxInt,
-                },
-                altura: {
-                    min: alturaMinInt,
-                    max: alturaMaxInt
-                },
-                imagen: razaApi.image.url,
-                temperamento: razaApi.temperament,
-                raza: razaApi.breed_group
+            var alturaMinInt = parseInt(razaApi.height.metric.slice(0, -4))
+            var alturaMaxInt = parseInt(razaApi.height.metric.slice(4))
+
+            if (razaApi.weight.metric.length <= 2 ) {
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: parseInt(razaApi.weight.metric),
+                        max: parseInt(razaApi.weight.metric),
+                    },
+                    altura: {
+                        min: alturaMinInt,
+                        max: alturaMaxInt
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
+            } else if(razaApi.weight.metric === "NaN"){
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: MinImperial,
+                        max: MaxImperial,
+                    },
+                    altura: {
+                        min: alturaMinInt,
+                        max: alturaMaxInt
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
+            }else if(razaApi.weight.metric.includes("NaN")){
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: "No hay informacion",
+                        max: parseInt(razaApi.weight.metric.slice(5)),
+                    },
+                    altura: {
+                        min: alturaMinInt,
+                        max: alturaMaxInt
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
+            }else
+             if (razaApi.height.metric.length <= 2) {
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: parseInt(razaApi.weight.metric),
+                        max: parseInt(razaApi.weight.metric),
+                    },
+                    altura: {
+                        min: "No hay informacion",
+                        max: parseInt(razaApi.height.metric)
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
             }
-            return infoApi
+            else {
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: MinInt,
+                        max: MaxInt,
+                    },
+                    altura: {
+                        min: alturaMinInt,
+                        max: alturaMaxInt
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
+            }
+
         });
         let db = dogsDbResponse.map(raza => {
             let infoDb = {
                 id: raza.id,
                 nombre: raza.name,
-                temperamento: raza.Temperamentos.map(e=> e.name).join(","),
-                altura:{
+                temperamento: raza.Temperamentos.map(e => e.name).join(","),
+                altura: {
                     min: raza.altura.min,
                     max: raza.altura.max,
                 },
@@ -75,46 +147,118 @@ const getDogs = async function (req, res, next) {
     }
 }
 
-const getBuscarDogs = async function(req, res, next) {
+const getBuscarDogs = async function (req, res, next) {
     try {
         const { name } = req.query;
         let nombre = name.charAt(0).toUpperCase() + name.slice(1)
         let dogsApiResponse = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
         let dogsDbResponse = await Dog.findAll({ include: Temperamento }).then(response => { return response })
         let Api = dogsApiResponse.data.map(razaApi => {
-            var MinString = razaApi.weight.metric.slice(0, -4)
-            var MinInt = parseInt(MinString)
-            var MaxString = razaApi.weight.metric.slice(4)
-            var MaxInt = parseInt(MaxString)
+            //--peso
+            var MinInt = parseInt(razaApi.weight.metric.slice(0, -4))
+            var MaxInt = parseInt(razaApi.weight.metric.slice(4))
+            var MinImperial = Math.round(parseInt(razaApi.weight.imperial.slice(0, -4))/2.2)
+            var MaxImperial = Math.round(parseInt(razaApi.weight.imperial.slice(4))/2.2)
             //---altura
-            var alturaMinString = razaApi.height.metric.slice(0, -4)
-            var alturaMinInt = parseInt(alturaMinString)
-            var alturaMaxString = razaApi.height.metric.slice(4)
-            var alturaMaxInt = parseInt(alturaMaxString)
-            //----
-            let infoApi = {
-                id: razaApi.id,
-                nombre: razaApi.name,
-                peso: {
-                    min: MinInt,
-                    max: MaxInt,
-                },
-                altura: {
-                    min: alturaMinInt,
-                    max: alturaMaxInt
-                },
-                imagen: razaApi.image.url,
-                temperamento: razaApi.temperament,
-                raza: razaApi.breed_group
+            var alturaMinInt = parseInt(razaApi.height.metric.slice(0, -4))
+            var alturaMaxInt = parseInt(razaApi.height.metric.slice(4))
+
+            if (razaApi.weight.metric.length <= 2 ) {
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: parseInt(razaApi.weight.metric),
+                        max: parseInt(razaApi.weight.metric),
+                    },
+                    altura: {
+                        min: alturaMinInt,
+                        max: alturaMaxInt
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
+            } else if(razaApi.weight.metric === "NaN"){
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: MinImperial,
+                        max: MaxImperial,
+                    },
+                    altura: {
+                        min: alturaMinInt,
+                        max: alturaMaxInt
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
+            }else if(razaApi.weight.metric.includes("NaN")){
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: "No hay informacion",
+                        max: parseInt(razaApi.weight.metric.slice(5)),
+                    },
+                    altura: {
+                        min: alturaMinInt,
+                        max: alturaMaxInt
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
+            }else
+             if (razaApi.height.metric.length <= 2) {
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: parseInt(razaApi.weight.metric),
+                        max: parseInt(razaApi.weight.metric),
+                    },
+                    altura: {
+                        min: "No hay informacion",
+                        max: parseInt(razaApi.height.metric)
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
             }
-            return infoApi
+            else {
+                let infoApi = {
+                    id: razaApi.id,
+                    nombre: razaApi.name,
+                    peso: {
+                        min: MinInt,
+                        max: MaxInt,
+                    },
+                    altura: {
+                        min: alturaMinInt,
+                        max: alturaMaxInt
+                    },
+                    imagen: razaApi.image.url,
+                    temperamento: razaApi.temperament,
+                    raza: razaApi.breed_group
+                }
+                return infoApi
+            }
+
         });
         let db = dogsDbResponse.map(raza => {
             let infoDb = {
                 id: raza.id,
                 nombre: raza.name,
-                temperamento: raza.Temperamentos.map(e=> e.name).join(","),
-                altura:{
+                temperamento: raza.Temperamentos.map(e => e.name).join(","),
+                altura: {
                     min: raza.altura.min,
                     max: raza.altura.max,
                 },
@@ -177,7 +321,7 @@ function getBuscarId(req, res, next) {
 
 
 function postFormularioDogs(req, res, next) {
-    const { name, alturaMin,alturaMax, pesoMin, pesoMax, anos_de_vida, raza } = req.body;
+    const { name, alturaMin, alturaMax, pesoMin, pesoMax, anos_de_vida, raza } = req.body;
     let values = {
         name: name.charAt(0).toUpperCase() + name.slice(1),
         altura: {

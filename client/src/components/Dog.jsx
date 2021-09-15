@@ -33,9 +33,9 @@ export function Dog({ DogState, getDogs, Dogspesos, DogsAltura, Dogs }) {
                         <h4>Peso Maximo: <h5>{Dogspesos[1]} Kg</h5></h4>
                         <h4>Altura Minima <h5>{DogsAltura[0]} cm</h5></h4>
                         <h4>Altura Maxima <h5>{DogsAltura[1]} cm</h5></h4>
-                        <h4>Temperamentos {Temp.map(e => {
+                        <h4>Temperamentos {Temp.map((e,i) => {
                             return (
-                                <h5>{e}</h5>
+                                <h5 key={i}>{e}</h5>
                             )
                         })}</h4>
 
@@ -58,9 +58,9 @@ export function Dog({ DogState, getDogs, Dogspesos, DogsAltura, Dogs }) {
                         <h4>Peso Maximo: <h5>{Dogspesos[1]} Kg</h5></h4>
                         <h4>Altura Minima <h5>{DogsAltura[0]} cm</h5></h4>
                         <h4>Altura Maxima <h5>{DogsAltura[1]} cm</h5></h4>
-                        <h4>Temperamentos {Temp.map(e => {
+                        <h4>Temperamentos {Temp.map((e,i) => {
                             return (
-                                <h5>{e}</h5>
+                                <h5 key={i}>{e}</h5>
                             )
                         })}</h4>
 
